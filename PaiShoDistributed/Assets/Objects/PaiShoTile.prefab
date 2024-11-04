@@ -1,0 +1,155 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &94241837207437962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3361215086648870655}
+  - component: {fileID: 7086767406424285499}
+  - component: {fileID: 526929140382720293}
+  - component: {fileID: 7356604889633842703}
+  m_Layer: 0
+  m_Name: PaiShoTile
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3361215086648870655
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94241837207437962}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -29.1, z: -1}
+  m_LocalScale: {x: 12, y: 12, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &7086767406424285499
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94241837207437962}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 4fbe9214d8e8142d0957bb10ccc5529b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.64, y: 0.64}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &526929140382720293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94241837207437962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03abd0cb74e744080a0ece8bab3f1ae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+  movePlate: {fileID: 6762904503050798576, guid: 6b4786ab0c1c44d38b53eee53034868c, type: 3}
+  KoiFishBlue: {fileID: 21300000, guid: 4fbe9214d8e8142d0957bb10ccc5529b, type: 3}
+  KoiFishWhite: {fileID: 21300000, guid: 34ac66c0b9bf9426c98cbfdc4601f5b3, type: 3}
+  BadgerMoleBlue: {fileID: 21300000, guid: 1fc1561d485194cdaba3ff522982dae0, type: 3}
+  BadgerMoleWhite: {fileID: 21300000, guid: a065aee411b7148b99825d8b92f57e6b, type: 3}
+  DragonBlue: {fileID: 21300000, guid: bde50a9dd1a0d48458138b64152490c9, type: 3}
+  DragonWhite: {fileID: 21300000, guid: 0a1bf5d15a4c046e9b283f19405a9edb, type: 3}
+  GinsengBlue: {fileID: 21300000, guid: ff6590ddd0da744689bc9c626fef2550, type: 3}
+  GinsengWhtie: {fileID: 21300000, guid: ceb23b966de33445c95bf5545a38e03b, type: 3}
+  LionTurtleBlue: {fileID: 21300000, guid: cc23a52c0c6ab427facd57a6ddff3a2e, type: 3}
+  LionTurtleWhite: {fileID: 21300000, guid: dee7cd64469e14ea5875319e20c0c354, type: 3}
+  OrchidBlue: {fileID: 21300000, guid: 77ff60061833f4e67ac70f909e6e9474, type: 3}
+  OrchidWhite: {fileID: 21300000, guid: 0a6e03d6809d4426199d92f9b8237ce5, type: 3}
+  WheelBlue: {fileID: 21300000, guid: 0b37507a09eaa4317864f9366dd9569d, type: 3}
+  WheelWhite: {fileID: 21300000, guid: 3bd8f29c027a340fa878dc640923c2ba, type: 3}
+  WhiteLotusWhite: {fileID: 21300000, guid: dacc0d476582645f9b5a317d521318a8, type: 3}
+  WhiteLotusBlue: {fileID: 21300000, guid: 2e5786b62b78040cba92589c0040e108, type: 3}
+  SkyBisonBlue: {fileID: 21300000, guid: 473d068997386491db2a1f164ac77079, type: 3}
+  SkyBisonWhite: {fileID: 21300000, guid: 9ee248ba0ede340c4a24b9812586eb53, type: 3}
+--- !u!58 &7356604889633842703
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94241837207437962}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.32
