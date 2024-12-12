@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
+using System;
+using System.Text;
+using System.Threading.Tasks;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using UnityEngine.SceneManagement;
 
 public class PaiShoTile : MonoBehaviour
 {
     public GameObject controller;
     public GameObject movePlate;
+
+    public Game game { get; set; }
 
     //position
     private int xBoard = -1;
@@ -155,10 +162,18 @@ public class PaiShoTile : MonoBehaviour
         yBoard = y;
     }
 
-    private void OnMouseUp()
+    private async Task OnMouseUp()
     {
-        DestroyMovePlates();
-        InitiateMovePlates();
+        if (game.myTurn == true)
+        {
+            await game.gameLogicProducer.DeclareQueue($"{xBoard},{yBoard}");
+            Debug.Log($"MessageSent:{xBoard},{yBoard}");
+            game.myTurn = false;
+        }
+    }
+
+    public async Task GetMovePlates()
+    {
     }
 
     public void DestroyMovePlates()
@@ -171,8 +186,10 @@ public class PaiShoTile : MonoBehaviour
     }
 
     public void InitiateMovePlates()
-    {
-        switch (this.name)
+    {     
+        
+        
+        /*  switch (this.name)
         {
             case "KoiFishBlue":
             case "KoiFishWhite": 
@@ -218,7 +235,7 @@ public class PaiShoTile : MonoBehaviour
             case "SkyBisonWhite": 
                 MovePlate(this.GetXBoard(), this.GetYBoard());
                 break;
-        }
+        }*/
     }
 
     public void WheelPlate(int xPosition, int yPosition)

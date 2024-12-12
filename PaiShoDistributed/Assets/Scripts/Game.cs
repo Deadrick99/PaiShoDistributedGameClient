@@ -1,21 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
+using System.Text;
+using System.Threading.Tasks;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using UnityEngine.SceneManagement;
+using Newtonsoft.Json;
 public class Game : MonoBehaviour
 {
     public GameObject PaiShoTile;
-
+    public GameObject movePlate;
     private GameObject[,] positions = new GameObject[17,17];
     private GameObject[] playerWhite = new GameObject[11];
     private GameObject[] playerBlue = new GameObject[11];
 
+    public QueueProducer gameLogicProducer {get; private set; }
+    public QueueConsumer gameLogicConsumer {get; private set; }
     private string currentPlayer;
-
+    public bool myTurn {get;  set; }
+    public bool movePlateClicked {get;  set; }
+    private Guid guid;
     private bool gameOver;
     // Start is called before the first frame update
-    void Start()
-    {
+    async void Start()
+    { 
+        gameOver = false;
+        myTurn = false;
+        movePlateClicked = true;
+        guid = Guid.NewGuid();
+        QueueProducer requestMatchMaking = new QueueProducer();
+        await requestMatchMaking.DeclareQueue("MatchMaking");
+        Debug.Log("Queue Declared");
+        await requestMatchMaking.SendMessage(Encoding.UTF8.GetBytes(guid.ToString()));
+        requestMatchMaking.rabbitMQConnection.Disconnect();
+
+        QueueConsumer awaitMatchMaking = new QueueConsumer();
+        await awaitMatchMaking.DeclareQueue(guid.ToString());
+        await awaitMatchMaking.InitConsumer();
+        string message = await awaitMatchMaking.ConsumeMessageAsync();
+        awaitMatchMaking.rabbitMQConnection.Disconnect();
+
+        gameLogicConsumer = new QueueConsumer();
+        await gameLogicConsumer.DeclareQueue($"{message}{guid.ToString()}");
+        await gameLogicConsumer.InitConsumer();
+
+        gameLogicProducer = new QueueProducer();
+        await gameLogicProducer.DeclareQueue($"{guid.ToString()}{message}");
+        Debug.Log($"{message}{guid.ToString()}");
+        
         playerWhite = new GameObject[]
         {
             Create("WheelWhite", 5,3), Create("WheelWhite", 11,3), Create("GinsengWhite", 4,4), 
@@ -35,11 +69,96 @@ public class Game : MonoBehaviour
             SetPostition(playerWhite[i]);
             SetPostition(playerBlue[i]);
         }
+        currentPlayer = await gameLogicConsumer.ConsumeMessageAsync();
+        Debug.Log(currentPlayer);
+        while (!gameOver)
+        {
+            //wait for turn 
+            string turn = await gameLogicConsumer.ConsumeMessageAsync();
+            Debug.Log($"{turn}");
+            if (turn == "Loss")
+            {
+                gameOver = true;
+                Loss();
+                break;
+            }
+            else
+            {
+                await MakeMove();
+            }
+            string gameState = await gameLogicConsumer.ConsumeMessageAsync();
+            if (gameState == "Win")
+            {
+                gameOver = true;
+                Win();
+                break;
+            }
+            else
+            {
+                UpdateState(gameState);
+            }
+        }
     }
+
+    public void UpdateState(string state)
+    {
+        string[] boardSpots = state.Split(',');
+        
+    }
+
+    public async Task MakeMove()
+    {
+        movePlateClicked = false;
+        while (!movePlateClicked)
+        {
+            myTurn = true;
+            string movePlates = await gameLogicConsumer.ConsumeMessageAsync();
+            generateMovePlates(movePlates);
+            Debug.Log($"MovePlatesReceived:{movePlates}");
+        }
+    }
+
+    public void generateMovePlates(string movePlates)
+    {
+        string[] movePlateCoords = movePlates.Split(',');
+        foreach (string movePlateCoord in movePlateCoords)
+        {
+            string[] coords = movePlateCoord.Split(',');
+            MovePlateSpawn(Int32.Parse(coords[0]), Int32.Parse(coords[1]));
+        }
+    }
+    public void MovePlateSpawn(int matrixX, int matrixY)
+    {
+        //Get the board value in order to convert to xy coords
+        float x = matrixX;
+        float y = matrixY;
+
+        x *= 4.2f;
+        y *= 4.2f;
+
+        x += -33.5f;
+        y += -33.5f;
+
+        //Set actual unity values
+        GameObject mp = Instantiate(movePlate, new Vector3(x, y, -3.0f), Quaternion.identity);
+
+        MovePlate mpScript = mp.GetComponent<MovePlate>();
+        mpScript.SetReference(gameObject);
+        mpScript.SetCoords(matrixX, matrixY);
+    }
+    public void Win()
+    {
+    }
+
+    public void Loss()
+    {
+    }
+
     public GameObject Create(string name, int x, int y)
     {
         GameObject obj = Instantiate(PaiShoTile, new Vector3(0,0,-1), Quaternion.identity);
         PaiShoTile tile = obj.GetComponent<PaiShoTile>();
+        tile.game = this;
         tile.name = name;
         tile.SetXBoard(x);
         tile.SetYBoard(y);
@@ -71,5 +190,25 @@ public class Game : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    public string GetCurrentPlayer()
+    {
+        return currentPlayer;
+    }
+    
+    public bool IsGameOver()
+    {
+        return gameOver;
+    }
+
+    public void Update()
+    {
+        if (gameOver == true && Input.GetMouseButtonDown(0))
+        {
+            gameOver = false;
+
+            SceneManager.LoadScene("Game");
+        }
     }
 }

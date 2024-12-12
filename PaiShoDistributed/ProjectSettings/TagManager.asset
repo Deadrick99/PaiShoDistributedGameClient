@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - MovePlate
+  - ConnectionText
+  - Start Text
+  - Winner Text
+  - GameBoard
   layers:
   - Default
   - TransparentFX

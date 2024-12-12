@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class MovePlate : MonoBehaviour
 {
     public GameObject controller;
@@ -41,7 +42,7 @@ public class MovePlate : MonoBehaviour
         reference.GetComponent<PaiShoTile>().SetCoords();
 
         controller.GetComponent<Game>().SetPostition(reference);
-
+        
         reference.GetComponent<PaiShoTile>().DestroyMovePlates();
     }
 
